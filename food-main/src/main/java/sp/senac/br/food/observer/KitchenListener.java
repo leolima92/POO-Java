@@ -1,0 +1,25 @@
+package sp.senac.br.food.observer;
+
+import sp.senac.br.food.order.Order;
+import sp.senac.br.food.order.OrderStatus;
+import sp.senac.br.food.order.OrderStatusObserver;
+import sp.senac.br.food.views.HomeView;
+
+
+public class KitchenListener implements OrderStatusObserver {
+
+    private HomeView homeView;
+
+    public KitchenListener(HomeView homeView) {
+        this.homeView = homeView;
+    }
+
+    @Override
+    public void update(Order order) {
+        if (order.getStatus() == OrderStatus.PREPARING) {
+            homeView.addToKitchen(order);
+            homeView.addLog("Pedido adicionado a cozinha: " + order.getId() + " " + order.getProduct());
+        }
+    }
+
+}
